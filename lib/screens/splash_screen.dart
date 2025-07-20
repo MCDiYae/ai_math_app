@@ -52,7 +52,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset(
-                'assets/logo_math_app.png',
+                'assets/images/logo_math_app.png',
                 width: 150,
                 height: 150,
               ),

@@ -6,6 +6,7 @@ class AppConstants {
   // API URLs (Replace with your actual API endpoints)
   static const String openAIApiUrl = 'https://api.openai.com/v1/chat/completions';
   static const String deepSeekApiUrl = 'https://api.deepseek.com/v1/chat/completions';
+  static const String keyDeepseek= "sk-6c0438ad49a4438bb348bbb5a182fd1a";
   
   // Storage Keys
   static const String themeKey = 'theme_mode';
