@@ -18,12 +18,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-     return MultiProvider(
-       providers: [
-        ChangeNotifierProvider(create: (_) => ChatProvider()),
-        //ChangeNotifierProvider(create: (_) => ScanProvider()),
-        // Add other providers here
-      ],
+     return ChangeNotifierProvider(
+      create: (context) => ChatProvider(),
        child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: "Math Solver",

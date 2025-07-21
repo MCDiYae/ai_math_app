@@ -1,6 +1,6 @@
 class ChatMessage {
   final String text;
-  final bool isUser;
+  final bool isUser; // true for user, false for AI
   final DateTime timestamp;
 
   ChatMessage({

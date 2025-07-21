@@ -1,8 +1,7 @@
-import 'package:ai_math_app/utils/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../models/chat_message.dart';
 import '../providers/chat_provider.dart';
+import '../models/chat_message.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});
@@ -16,47 +15,24 @@ class _ChatScreenState extends State<ChatScreen> {
   final ScrollController _scrollController = ScrollController();
 
   @override
-  void dispose() {
-    _controller.dispose();
-    _scrollController.dispose();
-    super.dispose();
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _scrollController.jumpTo(_scrollController.position.minScrollExtent);
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    final theme = buildAppTheme();
+    final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Math Tutor', style: theme.appBarTheme.titleTextStyle),
+        title: const Text('Math Chat Assistant'),
         actions: [
           IconButton(
             icon: const Icon(Icons.delete),
-            onPressed: () {
-              // Show confirmation dialog
-              showDialog(
-                context: context,
-                builder: (context) => AlertDialog(
-                  title: const Text('Clear Conversation'),
-                  content: const Text('Are you sure you want to delete all messages?'),
-                  actions: [
-                    TextButton(
-                      onPressed: () => Navigator.pop(context),
-                      child: Text('CANCEL', style: theme.textTheme.bodyMedium),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        Provider.of<ChatProvider>(context, listen: false).clearMessages();
-                        Navigator.pop(context);
-                      },
-                      child: Text('DELETE', style: theme.textTheme.bodyMedium?.copyWith(
-                        color: theme.colorScheme.error,
-                      )),
-                    ),
-                  ],
-                ),
-              );
-            },
-          )
+            onPressed: () => context.read<ChatProvider>().clearMessages(),
+          ),
         ],
       ),
       body: Column(
@@ -64,109 +40,116 @@ class _ChatScreenState extends State<ChatScreen> {
           Expanded(
             child: Consumer<ChatProvider>(
               builder: (context, provider, _) {
-                WidgetsBinding.instance.addPostFrameCallback((_) {
-                  if (_scrollController.hasClients) {
-                    _scrollController.animateTo(
-                      0,
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.easeOut,
-                    );
-                  }
-                });
-
                 if (provider.error != null) {
-                  return Center(
-                    child: Text(
-                      'Error: ${provider.error}',
-                      style: theme.textTheme.bodyLarge?.copyWith(
-                        color: theme.colorScheme.error,
+                  WidgetsBinding.instance.addPostFrameCallback((_) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Text(
+                              'Network Error',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            Text(provider.error!),
+                          ],
+                        ),
+                        backgroundColor: theme.colorScheme.error,
+                        duration: const Duration(seconds: 5),
+                        action: SnackBarAction(
+                          label: 'Retry',
+                          textColor: Colors.white,
+                          onPressed: () {
+                            // Add retry logic if needed
+                          },
+                        ),
                       ),
-                    ),
-                  );
+                    );
+                  });
                 }
 
                 return ListView.builder(
                   controller: _scrollController,
                   reverse: true,
                   itemCount: provider.messages.length,
-                  padding: const EdgeInsets.all(16),
+                  padding: const EdgeInsets.symmetric(vertical: 16),
                   itemBuilder: (context, index) {
                     final message = provider.messages[index];
-                    return _MessageBubble(message: message, theme: theme);
+                    return _ChatBubble(message: message);
                   },
                 );
               },
             ),
           ),
-          _InputArea(controller: _controller, theme: theme),
+          _InputField(controller: _controller),
+          if (context.watch<ChatProvider>().isLoading)
+            const LinearProgressIndicator(),
         ],
       ),
     );
   }
 }
 
-class _MessageBubble extends StatelessWidget {
+class _ChatBubble extends StatelessWidget {
   final ChatMessage message;
-  final ThemeData theme;
 
-  const _MessageBubble({required this.message, required this.theme});
+  const _ChatBubble({required this.message});
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isUser = message.isUser;
+
     return Container(
-      margin: const EdgeInsets.only(bottom: 16),
+      margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        mainAxisAlignment: isUser
+            ? MainAxisAlignment.end
+            : MainAxisAlignment.start,
         children: [
-          if (!message.isUser)
+          if (!isUser)
             CircleAvatar(
               backgroundColor: theme.colorScheme.primary,
               child: const Text('AI', style: TextStyle(color: Colors.white)),
             ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: message.isUser
-                  ? CrossAxisAlignment.end
-                  : CrossAxisAlignment.start,
-              children: [
-                Card(
-                  color: message.isUser
+          Flexible(
+            child: Container(
+              margin: const EdgeInsets.symmetric(horizontal: 8),
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: isUser
+                    ? theme.colorScheme.primary.withOpacity(0.1)
+                    : theme.colorScheme.surface,
+                borderRadius: BorderRadius.only(
+                  topLeft: const Radius.circular(16),
+                  topRight: const Radius.circular(16),
+                  bottomLeft: Radius.circular(isUser ? 16 : 0),
+                  bottomRight: Radius.circular(isUser ? 0 : 16),
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black12,
+                    blurRadius: 4,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: Text(
+                message.text,
+                style: theme.textTheme.bodyMedium!.copyWith(
+                  color: isUser
                       ? theme.colorScheme.primary
-                      : theme.colorScheme.surface,
-                  elevation: 2,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(
-                      topLeft: const Radius.circular(16),
-                      topRight: const Radius.circular(16),
-                      bottomLeft: Radius.circular(message.isUser ? 16 : 0),
-                      bottomRight: Radius.circular(message.isUser ? 0 : 16),
-                    ),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Text(
-                      message.text,
-                      style: theme.textTheme.bodyLarge?.copyWith(
-                        color: message.isUser ? Colors.white : Colors.black87,
-                      ),
-                    ),
-                  ),
+                      : theme.textTheme.bodyMedium?.color,
                 ),
-                const SizedBox(height: 4),
-                Text(
-                  '${message.timestamp.hour}:${message.timestamp.minute.toString().padLeft(2, '0')}',
-                  style: theme.textTheme.bodyMedium,
-                ),
-              ],
+              ),
             ),
           ),
-          if (message.isUser)
-            const SizedBox(width: 12),
-          if (message.isUser)
+          if (isUser)
             CircleAvatar(
               backgroundColor: theme.colorScheme.secondary,
-              child: const Icon(Icons.person, color: Colors.white),
+              child: const Text('U', style: TextStyle(color: Colors.white)),
             ),
         ],
       ),
@@ -174,67 +157,53 @@ class _MessageBubble extends StatelessWidget {
   }
 }
 
-class _InputArea extends StatelessWidget {
+class _InputField extends StatelessWidget {
   final TextEditingController controller;
-  final ThemeData theme;
 
-  const _InputArea({required this.controller, required this.theme});
+  const _InputField({required this.controller});
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<ChatProvider>(context);
-
-    return Container(
-      padding: const EdgeInsets.all(16),
-      color: theme.scaffoldBackgroundColor,
-      child: Row(
-        children: [
-          Expanded(
-            child: TextField(
-              controller: controller,
-              decoration: InputDecoration(
-                hintText: 'Ask a math question...',
-                filled: true,
-                fillColor: theme.colorScheme.surface,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(24),
-                  borderSide: BorderSide.none,
-                ),
-                contentPadding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                  vertical: 16,
-                ),
-              ),
-              onSubmitted: (_) => _sendMessage(context),
-            ),
-          ),
-          const SizedBox(width: 12),
-          Consumer<ChatProvider>(
-            builder: (context, provider, _) {
-              if (provider.isLoading) {
-                return const Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: CircularProgressIndicator(),
-                );
-              }
-              return FloatingActionButton(
-                backgroundColor: theme.colorScheme.primary,
+    final theme = Theme.of(context);
+    return SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Material(
+          elevation: 4,
+          borderRadius: BorderRadius.circular(24),
+          child: TextField(
+            controller: controller,
+            decoration: InputDecoration(
+              hintText: 'Ask a math question...',
+              filled: true,
+              fillColor: theme.colorScheme.surface,
+              suffixIcon: IconButton(
+                icon: Icon(Icons.send, color: theme.colorScheme.primary),
                 onPressed: () => _sendMessage(context),
-                child: const Icon(Icons.send, color: Colors.white),
-              );
-            },
+              ),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(24),
+                borderSide: BorderSide.none,
+              ),
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 20,
+                vertical: 16,
+              ),
+            ),
+            onSubmitted: (_) => _sendMessage(context),
+            minLines: 1,
+            maxLines: 3,
           ),
-        ],
+        ),
       ),
     );
   }
 
   void _sendMessage(BuildContext context) {
-    if (controller.text.trim().isEmpty) return;
-    
-    Provider.of<ChatProvider>(context, listen: false)
-        .sendMessage(controller.text.trim());
-    controller.clear();
-    FocusScope.of(context).unfocus();
+    final text = controller.text.trim();
+    if (text.isNotEmpty) {
+      context.read<ChatProvider>().sendMessage(text);
+      controller.clear();
+    }
   }
 }

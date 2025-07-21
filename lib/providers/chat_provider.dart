@@ -14,41 +14,34 @@ class ChatProvider with ChangeNotifier {
   final AIService _aiService = AIService();
 
   Future<void> sendMessage(String text) async {
-    // Add user message immediately
-    _addMessage(text, true);
-    
+    if (text.isEmpty) return;
+
+    // Add user message
+    _messages.insert(0, ChatMessage(text: text, isUser: true));
+    _isLoading = true;
+    _error = null;
+    notifyListeners();
+
     try {
-      _isLoading = true;
-      _error = null; // Clear previous errors
-      notifyListeners();
-      
       // Get AI response
-      final response = await _aiService.sendMessage(_messages);
+      final response = await _aiService.sendMessage(text);
       
-      // Add AI response
-      _addMessage(response, false);
+      // Add AI message
+      _messages.insert(0, ChatMessage(text: response, isUser: false));
     } catch (e) {
       _error = e.toString();
-      
-      // Add error message to chat for better UX
-      _addMessage("Sorry, I couldn't process your request. Please try again.", false);
     } finally {
       _isLoading = false;
       notifyListeners();
     }
   }
 
-  void _addMessage(String text, bool isUser) {
-    _messages.insert(0, ChatMessage(
-      text: text,
-      isUser: isUser,
-    ));
+  
+  void clearMessages() {
+    _messages.clear();
+    _error = null; 
     notifyListeners();
   }
 
-  void clearMessages() {
-    _messages.clear();
-    _error = null; // Clear any existing errors
-    notifyListeners();
-  }
+
 }

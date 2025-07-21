@@ -1,36 +1,45 @@
+import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 import 'package:http/http.dart' as http;
-import '../models/chat_message.dart';
+
 
 class AIService {
-  static const String _baseUrl = 'https://api.deepseek.com/v1/chat/completions';
-  final String? _apiKey = "6c0438ad49a4438bb348bbb5a182fd1a";
+  static const String _apiKey = "sk-6ecae3ba03614f4280a6a94097fdaa7b";
+  static const String _apiUrl = "https://api.deepseek.com/chat/completions";
 
-  Future<String> sendMessage(List<ChatMessage> messages) async {
-    if (_apiKey == null) throw Exception('API key not found');
+  Future<String> sendMessage(String message) async {
+    try {
+      // First check if we can resolve the host
+      await InternetAddress.lookup('api.deepseek.com');
+      final response = await http.post(
+        Uri.parse(_apiUrl),
+        headers: {
+          "Authorization": "Bearer $_apiKey",
+          "Content-Type": "application/json",
+        },
+        body: jsonEncode({
+          "model": "deepseek-chat",
+          "messages": [
+            {"role": "user", "content": message}
+          ],
+        }),
+      ).timeout(const Duration(seconds: 30));
 
-    final response = await http.post(
-      Uri.parse(_baseUrl),
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer $_apiKey',
-      },
-      body: jsonEncode({
-        'model': 'deepseek-math',
-        'messages': messages.map((m) => {
-          'role': m.isUser ? 'user' : 'assistant',
-          'content': m.text
-        }).toList(),
-        'temperature': 0.7,
-        'max_tokens': 500,
-      }),
-    );
-
-    if (response.statusCode == 200) {
-      final data = jsonDecode(response.body);
-      return data['choices'][0]['message']['content'];
-    } else {
-      throw Exception('Failed to get response: ${response.statusCode}');
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        return data['choices'][0]['message']['content'];
+      } else {
+        throw "API Error: ${response.statusCode} - ${response.body}";
+      }
+    } on SocketException catch (e) {
+      throw "Network error: ${e.message}";
+    } on HttpException catch (e) {
+      throw "HTTP error: ${e.message}";
+    } on TimeoutException {
+      throw "Request timed out";
+    } catch (e) {
+      throw "Connection failed: ${e.toString()}";
     }
   }
 }
