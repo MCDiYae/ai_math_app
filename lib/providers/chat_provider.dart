@@ -1,47 +1,73 @@
-import 'package:ai_math_app/services/api_service.dart';
 import 'package:flutter/material.dart';
 import '../models/chat_message.dart';
+import '../services/api_service.dart';
 
-class ChatProvider with ChangeNotifier {
+class ChatProvider extends ChangeNotifier {
   final List<ChatMessage> _messages = [];
+  final ApiService _apiService = ApiService();
   bool _isLoading = false;
-  String? _error;
+  bool _apiConnected = true;
 
-  List<ChatMessage> get messages => _messages;
+  List<ChatMessage> get messages => List.unmodifiable(_messages);
   bool get isLoading => _isLoading;
-  String? get error => _error;
+  bool get apiConnected => _apiConnected;
 
-  final AIService _aiService = AIService();
+  ChatProvider() {
+    _addWelcomeMessage();
+  }
+
+  void _addWelcomeMessage() {
+    _messages.insert(0, ChatMessage(
+      text: "Hello! I'm your AI assistant. How can I help you today?",
+      isUser: false,
+      timestamp: DateTime.now(),
+    ));
+    notifyListeners();
+  }
 
   Future<void> sendMessage(String text) async {
-    if (text.isEmpty) return;
+    if (text.trim().isEmpty || _isLoading) return;
 
     // Add user message
-    _messages.insert(0, ChatMessage(text: text, isUser: true));
-    _isLoading = true;
-    _error = null;
-    notifyListeners();
+    _messages.insert(0, ChatMessage(
+      text: text.trim(),
+      isUser: true,
+      timestamp: DateTime.now(),
+    ));
+
+    _setLoading(true);
 
     try {
-      // Get AI response
-      final response = await _aiService.sendMessage(text);
+      final aiResponse = await _apiService.sendMessage(text.trim());
       
-      // Add AI message
-      _messages.insert(0, ChatMessage(text: response, isUser: false));
+      // Add AI response
+      _messages.insert(0, ChatMessage(
+        text: aiResponse,
+        isUser: false,
+        timestamp: DateTime.now(),
+      ));
+      
+      _setApiConnected(true);
     } catch (e) {
-      _error = e.toString();
+      _setApiConnected(false);
+      rethrow; // Re-throw to handle in UI
     } finally {
-      _isLoading = false;
-      notifyListeners();
+      _setLoading(false);
     }
   }
 
-  
-  void clearMessages() {
+  void clearChat() {
     _messages.clear();
-    _error = null; 
+    _addWelcomeMessage();
+  }
+
+  void _setLoading(bool loading) {
+    _isLoading = loading;
     notifyListeners();
   }
 
-
+  void _setApiConnected(bool connected) {
+    _apiConnected = connected;
+    notifyListeners();
+  }
 }
