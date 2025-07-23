@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/scan_provider.dart';
+import '../widgets/banner_ad_widget.dart';
 import '../widgets/scan_result_card.dart';
 
 class ScanScreen extends StatelessWidget {
@@ -32,6 +33,7 @@ class ScanScreen extends StatelessWidget {
           _buildActionButtons(context),
           const Divider(height: 1),
           Expanded(child: _buildResultsList()),
+          const ScanBannerAd(),
         ],
       ),
     );
@@ -87,7 +89,7 @@ class ScanScreen extends StatelessWidget {
             borderRadius: BorderRadius.circular(12),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.1),
+                color: Colors.black.withValues(alpha: 0.1),
                 blurRadius: 8,
                 offset: const Offset(0, 2),
               ),

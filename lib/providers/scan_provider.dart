@@ -106,6 +106,7 @@ class ScanProvider extends ChangeNotifier {
       _scanResults.insert(0, scanResult);
       _setProcessing(false, '');
       _currentImage = null;
+      
 
     } catch (e) {
       // Store error result

@@ -65,8 +65,6 @@ ThemeData buildAppTheme() {
       tertiary: AppColors.accentPurple,
       surface: AppColors.surfaceLight,
       onSurface: AppColors.textPrimary,
-      background: AppColors.backgroundLight,
-      onBackground: AppColors.textPrimary,
       error: AppColors.mathRed,
       onError: AppColors.textWhite,
     ),
@@ -217,7 +215,7 @@ ThemeData buildAppTheme() {
     // Card Theme - Clean and modern
     cardTheme: CardThemeData(
       elevation: 2,
-      shadowColor: AppColors.primaryBlue.withOpacity(0.1),
+      shadowColor: AppColors.primaryBlue.withValues(alpha: 0.1),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
       ),
@@ -229,7 +227,7 @@ ThemeData buildAppTheme() {
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         elevation: 2,
-        shadowColor: AppColors.primaryBlue.withOpacity(0.25),
+        shadowColor: AppColors.primaryBlue.withValues(alpha: 0.25),
         backgroundColor: AppColors.primaryBlue,
         foregroundColor: AppColors.textWhite,
         shape: RoundedRectangleBorder(
@@ -356,7 +354,7 @@ ThemeData buildAppTheme() {
     
     // Chip Theme
     chipTheme: ChipThemeData(
-      backgroundColor: AppColors.primaryLight.withOpacity(0.1),
+      backgroundColor: AppColors.primaryLight.withValues(alpha: 0.1),
       labelStyle: const TextStyle(
         color: AppColors.primaryBlue,
         fontFamily: 'SF Pro Text',
@@ -431,8 +429,6 @@ ThemeData buildDarkAppTheme() {
       tertiary: AppColors.accentPurple,
       surface: AppColors.surfaceDark,
       onSurface: AppColors.textWhite,
-      background: AppColors.backgroundDark,
-      onBackground: AppColors.textWhite,
       error: AppColors.mathRed,
       onError: AppColors.textWhite,
     ),
@@ -448,7 +444,7 @@ ThemeData buildDarkAppTheme() {
     
     cardTheme: CardThemeData(
       elevation: 4,
-      shadowColor: AppColors.primaryLight.withOpacity(0.2),
+      shadowColor: AppColors.primaryLight.withValues(alpha: 0.2),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
       ),

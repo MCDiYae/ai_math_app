@@ -59,40 +59,38 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
-  void _showClearAllDialog() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Clear Chat History'),
-          content: const Text(
-            'Are you sure you want to clear all chat messages? This action cannot be undone.',
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: const Text('Cancel'),
-            ),
-            TextButton(
-              onPressed: () {
-                context.read<ChatProvider>().clearChat();
-                Navigator.of(context).pop();
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('Chat cleared'),
-                    duration: Duration(seconds: 2),
-                  ),
-                );
-              },
-              style: TextButton.styleFrom(foregroundColor: Colors.red),
-              child: const Text('Clear All'),
-            ),
-          ],
-        );
-      },
-    );
-  }
 
+void _showClearAllDialog() {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: const Text('Clear Chat History'),
+        content: const Text('Are you sure you want to clear all chat messages? This action cannot be undone.'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () {
+              context.read<ChatProvider>().clearChat();
+              Navigator.of(context).pop();
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Chat cleared'),
+                  duration: Duration(seconds: 2),
+                ),
+              );
+            },
+            style: TextButton.styleFrom(foregroundColor: Colors.red),
+            child: const Text('Clear All'),
+          ),
+        ],
+      );
+    },
+  );
+}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -108,13 +106,13 @@ class _ChatScreenState extends State<ChatScreen> {
             builder: (context, chatProvider, child) {
               return IconButton(
                 icon: Icon(
-                  chatProvider.apiConnected
-                      ? Icons.done
-                      : Icons.contact_support_rounded,
+                  chatProvider.apiConnected 
+                    ? Icons.done
+                    : Icons.contact_support_rounded
                 ),
-                tooltip: chatProvider.apiConnected
-                    ? 'API Connected'
-                    : 'API Disconnected',
+                tooltip: chatProvider.apiConnected 
+                  ? 'API Connected' 
+                  : 'API Disconnected',
                 onPressed: () {},
               );
             },
@@ -124,6 +122,7 @@ class _ChatScreenState extends State<ChatScreen> {
       body: Column(
         children: [
           Expanded(child: _buildMessagesList()),
+          // const ChatBannerAd(),
           _buildLoadingIndicator(),
           _buildInputSection(),
         ],
@@ -152,8 +151,8 @@ class _ChatScreenState extends State<ChatScreen> {
     return Consumer<ChatProvider>(
       builder: (context, chatProvider, child) {
         return chatProvider.isLoading
-            ? const LinearProgressIndicator(minHeight: 2)
-            : const SizedBox.shrink();
+          ? const LinearProgressIndicator(minHeight: 2)
+          : const SizedBox.shrink();
       },
     );
   }

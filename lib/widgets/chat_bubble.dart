@@ -56,7 +56,7 @@ class ChatBubble extends StatelessWidget {
 
   Widget _buildAvatar(ThemeData theme, bool isUser) {
     return CircleAvatar(
-      backgroundColor: theme.primaryColor.withOpacity(0.2),
+      backgroundColor: theme.primaryColor.withValues(alpha: 0.2),
       radius: 16,
       child: Icon(
         isUser ? Icons.person : Icons.auto_awesome,
@@ -69,7 +69,7 @@ class ChatBubble extends StatelessWidget {
   BoxDecoration _buildBubbleDecoration(ThemeData theme, bool isUser) {
     return BoxDecoration(
       color: isUser
-          ? theme.primaryColor.withOpacity(0.1)
+          ? theme.primaryColor.withValues(alpha: 0.1)
           : Colors.grey[100],
       borderRadius: BorderRadius.only(
         topLeft: const Radius.circular(16),
@@ -79,7 +79,7 @@ class ChatBubble extends StatelessWidget {
       ),
       boxShadow: [
         BoxShadow(
-          color: Colors.black.withOpacity(0.05),
+          color: Colors.black.withValues(alpha: 0.05),
           blurRadius: 4,
           offset: const Offset(0, 2),
         ),

@@ -1,7 +1,9 @@
-
 import 'package:ai_math_app/widgets/feature_card.dart';
 import 'package:ai_math_app/widgets/feature_item.dart';
 import 'package:flutter/material.dart';
+
+import '../widgets/banner_ad_widget.dart';
+import '../widgets/interstitial_ad_widget.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -9,10 +11,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("AI Math Solver"),
-        centerTitle: true,
-      ),
+      appBar: AppBar(title: const Text("AI Math Solver"), centerTitle: true),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -21,9 +20,9 @@ class HomeScreen extends StatelessWidget {
             // Header
             Text(
               "How can I help you today?",
-              style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
+              style: Theme.of(
+                context,
+              ).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 20),
 
@@ -31,9 +30,13 @@ class HomeScreen extends StatelessWidget {
             FeatureCard(
               icon: Icons.camera_alt,
               title: "Scan Math Problem",
-              description: "Take a photo of any math problem to get instant solutions.",
+              description:
+                  "Take a photo of any math problem to get instant solutions.",
               color: Theme.of(context).colorScheme.primary,
-              onTap: () => Navigator.pushNamed(context, '/scan'),
+              onTap: () => InterstitialAdManager.showNavigationAd(
+                context: context,
+                onComplete: () => Navigator.pushNamed(context, '/scan'),
+              ),
             ),
             const SizedBox(height: 16),
 
@@ -41,9 +44,13 @@ class HomeScreen extends StatelessWidget {
             FeatureCard(
               icon: Icons.chat,
               title: "Chat with AI",
-              description: "Ask any math question and get step-by-step answers.",
+              description:
+                  "Ask any math question and get step-by-step answers.",
               color: Theme.of(context).colorScheme.secondary,
-              onTap: () => Navigator.pushNamed(context, '/chat'),
+              onTap: () => InterstitialAdManager.showNavigationAd(
+                context: context,
+                onComplete: () => Navigator.pushNamed(context, '/chat'),
+              ),
             ),
             const SizedBox(height: 24),
 
@@ -53,10 +60,46 @@ class HomeScreen extends StatelessWidget {
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 8),
-            const FeatureItem(icon: Icons.check, text: "Algebra, Calculus, Geometry"),
-            const FeatureItem(icon: Icons.check, text: "Handwritten or printed problems"),
+            const FeatureItem(
+              icon: Icons.check,
+              text: "Algebra, Calculus, Geometry",
+            ),
+            const FeatureItem(
+              icon: Icons.check,
+              text: "Handwritten or printed problems",
+            ),
             const FeatureItem(icon: Icons.check, text: "Detailed explanations"),
+            const HomeBannerAd(),
           ],
+        ),
+      ),
+      bottomNavigationBar: SafeArea(
+        child: BottomAppBar(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              TextButton.icon(
+                onPressed: () => Navigator.pushNamed(context, '/terms'),
+                icon: const Icon(Icons.description_outlined, size: 24),
+                label: const Text('Terms'),
+                style: TextButton.styleFrom(
+                  textStyle: Theme.of(
+                    context,
+                  ).textTheme.labelSmall?.copyWith(fontSize: 12),
+                ),
+              ),
+              TextButton.icon(
+                onPressed: () => Navigator.pushNamed(context, '/privacy'),
+                icon: const Icon(Icons.privacy_tip_outlined, size: 24),
+                label: const Text('Privacy'),
+                style: TextButton.styleFrom(
+                  textStyle: Theme.of(
+                    context,
+                  ).textTheme.labelSmall?.copyWith(fontSize: 12),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
