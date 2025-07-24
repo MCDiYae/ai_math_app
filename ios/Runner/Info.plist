@@ -6,6 +6,8 @@
 	<string>Need camera access to scan documents</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Need photo library access to pick images</string>
+	<key>GADApplicationIdentifier</key>
+    <string>ca-app-pub-1132671221545305~6492325888</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
@@ -49,5 +51,10 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSAppTransportSecurity</key>
+    <dict>
+        <key>NSAllowsArbitraryLoads</key>
+        <true/>
+    </dict>
 </dict>
 </plist>

@@ -29,22 +29,22 @@ class AdConstants {
       : 'ca-app-pub-3940256099942544/4411468910'; // Test Interstitial for iOS
 
   // Ad Settings
-  static  int interstitialFrequency = 3; // Show ad every 3 actions
+  static  int interstitialFrequency = 4; // Show ad every 3 actions
   static  int bannerRefreshInterval = 60; // Refresh banner every 60 seconds
   static  bool enableTestMode = true; // Set to false for production
 
   // Production Ad IDs (Replace these with your actual AdMob Ad Unit IDs)
   static String prodAppId = Platform.isAndroid
-      ? 'ca-app-pub-XXXXXXXXXXXXXXXX~XXXXXXXXXX' // Your Android App ID
-      : 'ca-app-pub-XXXXXXXXXXXXXXXX~XXXXXXXXXX'; // Your iOS App ID
+      ? 'ca-app-pub-1132671221545305~4454369803' // Your Android App ID
+      : 'ca-app-pub-1132671221545305~6492325888'; // Your iOS App ID
 
   static String prodHomeBannerAdId = Platform.isAndroid
-      ? 'ca-app-pub-XXXXXXXXXXXXXXXX/XXXXXXXXXX' // Your Android Banner ID
-      : 'ca-app-pub-XXXXXXXXXXXXXXXX/XXXXXXXXXX'; // Your iOS Banner ID
+      ? 'ca-app-pub-1132671221545305/6365167525' // Your Android Banner ID
+      : 'ca-app-pub-1132671221545305/8426895091'; // Your iOS Banner ID
 
   static String prodNavigationInterstitialAdId = Platform.isAndroid
-      ? 'ca-app-pub-XXXXXXXXXXXXXXXX/XXXXXXXXXX' // Your Android Interstitial ID
-      : 'ca-app-pub-XXXXXXXXXXXXXXXX/XXXXXXXXXX'; // Your iOS Interstitial ID
+      ? 'ca-app-pub-1132671221545305/1744445983' // Your Android Interstitial ID
+      : 'ca-app-pub-1132671221545305/8118282643'; // Your iOS Interstitial ID
 
   // Helper methods
   static String getCurrentAppId() {

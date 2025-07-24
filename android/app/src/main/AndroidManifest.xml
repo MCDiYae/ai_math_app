@@ -7,6 +7,9 @@
         android:label="ai_math_app"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-1132671221545305~4454369803"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"

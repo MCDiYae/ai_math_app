@@ -1,3 +1,4 @@
+import 'package:ai_math_app/utils/ad_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
@@ -150,7 +151,7 @@ class HomeBannerAd extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BannerAdWidget(
-      adUnitId: 'ca-app-pub-3940256099942544/6300978111', // Test ID
+      adUnitId: AdConstants.getCurrentHomeBannerAdId(), 
       adSize: AdSize.banner,
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       backgroundColor: Theme.of(context).colorScheme.surface,
@@ -164,7 +165,7 @@ class ChatBannerAd extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BannerAdWidget(
-      adUnitId: 'ca-app-pub-3940256099942544/6300978111', // Test ID
+      adUnitId: AdConstants.getCurrentHomeBannerAdId(), 
       adSize: AdSize.banner,
       margin: const EdgeInsets.all(8),
       backgroundColor: Theme.of(context).colorScheme.surface,
@@ -178,7 +179,7 @@ class ScanBannerAd extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BannerAdWidget(
-      adUnitId: 'ca-app-pub-3940256099942544/6300978111', // Test ID
+      adUnitId: AdConstants.getCurrentHomeBannerAdId(),  
       adSize: AdSize.banner,
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       backgroundColor: Theme.of(context).colorScheme.surface,

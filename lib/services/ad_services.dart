@@ -72,7 +72,7 @@ class AdService {
   // Load navigation interstitial ad
   void _loadNavigationInterstitialAd() {
     InterstitialAd.load(
-      adUnitId: AdConstants.navigationInterstitialAdId,
+      adUnitId: AdConstants.getCurrentNavigationInterstitialAdId(),
       request: AdRequest(
         keywords: AdConstants.adKeywords,
         nonPersonalizedAds: AdConstants.enableTestMode,
@@ -94,7 +94,7 @@ class AdService {
   // Load scan complete interstitial ad
   void _loadScanCompleteInterstitialAd() {
     InterstitialAd.load(
-      adUnitId: AdConstants.scanCompleteInterstitialAdId,
+      adUnitId: AdConstants.getCurrentNavigationInterstitialAdId(),
       request: AdRequest(
         keywords: AdConstants.adKeywords,
         nonPersonalizedAds: AdConstants.enableTestMode,
