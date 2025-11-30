@@ -33,7 +33,7 @@ class ScanScreen extends StatelessWidget {
           _buildActionButtons(context),
           const Divider(height: 1),
           Expanded(child: _buildResultsList()),
-          const ScanBannerAd(),
+          // const ScanBannerAd(),
         ],
       ),
     );

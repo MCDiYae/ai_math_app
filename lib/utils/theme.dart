@@ -1,28 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-// Custom Color Palette for AI Math App
+// Custom Color Palette for AI Math App (Earthy Green & Sunset Orange)
 class AppColors {
-  // Primary colors - Deep blue representing intelligence and mathematics
-  static const Color primaryBlue = Color(0xFF1E3A8A); // Deep blue
-  static const Color primaryLight = Color(0xFF3B82F6); // Bright blue
-  static const Color primaryDark = Color(0xFF1E40AF); // Darker blue
+  // Primary colors - Deep Earthy Green representing focus and nature
+  static const Color primaryGreen = Color(0xFF059669); // Deep Green
+  static const Color primaryLight = Color(0xFF34D399); // Mint Green
+  static const Color primaryDark = Color(0xFF065F46); // Darker Green
   
-  // Secondary colors - Purple for AI/tech feeling
-  static const Color secondaryPurple = Color(0xFF7C3AED); // Vivid purple
-  static const Color secondaryLight = Color(0xFF8B5CF6); // Light purple
-  static const Color accentPurple = Color(0xFF6366F1); // Indigo accent
+  // Secondary colors - Sunset Orange for energy and warmth
+  static const Color secondaryOrange = Color(0xFFF97316); // Vivid Orange
+  static const Color secondaryLight = Color(0xFFFB923C); // Light Orange
+  static const Color accentBrown = Color(0xFFA16207); // Brown accent
   
   // Mathematical accent colors
-  static const Color mathGreen = Color(0xFF10B981); // Success/correct answers
-  static const Color mathOrange = Color(0xFFF59E0B); // Warning/attention
+  static const Color mathGreen = Color(0xFF10B981); // Success/correct answers (Kept this for standard success color)
+  static const Color mathOrange = Color(0xFFF59E0B); // Warning/attention (Slight change to align with secondary)
   static const Color mathRed = Color(0xFFEF4444); // Error/incorrect
   
   // Neural network inspired gradients
   static const LinearGradient primaryGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
-    colors: [primaryBlue, secondaryPurple],
+    colors: [primaryGreen, secondaryOrange],
   );
   
   static const LinearGradient lightGradient = LinearGradient(
@@ -32,22 +32,22 @@ class AppColors {
   );
   
   // Background colors
-  static const Color backgroundLight = Color(0xFFFAFBFF); // Very light blue-white
-  static const Color backgroundDark = Color(0xFF0F172A); // Dark slate
+  static const Color backgroundLight = Color(0xFFF0FFF4); // Very light mint green-white
+  static const Color backgroundDark = Color(0xFF1F2937); // Dark slate gray
   static const Color surfaceLight = Color(0xFFFFFFFF); // Pure white
-  static const Color surfaceDark = Color(0xFF1E293B); // Dark surface
+  static const Color surfaceDark = Color(0xFF374151); // Dark surface
   
   // Text colors
-  static const Color textPrimary = Color(0xFF0F172A); // Dark slate
-  static const Color textSecondary = Color(0xFF475569); // Medium slate
-  static const Color textLight = Color(0xFF94A3B8); // Light slate
+  static const Color textPrimary = Color(0xFF111827); // Dark gray
+  static const Color textSecondary = Color(0xFF4B5563); // Medium gray
+  static const Color textLight = Color(0xFF9CA3AF); // Light gray
   static const Color textWhite = Color(0xFFFFFFFF); // White
   
   // Card and container colors
   static const Color cardLight = Color(0xFFFFFFFF);
-  static const Color cardDark = Color(0xFF1E293B);
-  static const Color borderLight = Color(0xFFE2E8F0);
-  static const Color borderDark = Color(0xFF334155);
+  static const Color cardDark = Color(0xFF374151);
+  static const Color borderLight = Color(0xFFD1D5DB);
+  static const Color borderDark = Color(0xFF4B5563);
 }
 
 ThemeData buildAppTheme() {
@@ -58,15 +58,16 @@ ThemeData buildAppTheme() {
     
     // Color scheme
     colorScheme: const ColorScheme.light(
-      primary: AppColors.primaryBlue,
+      primary: AppColors.primaryGreen,
       onPrimary: AppColors.textWhite,
-      secondary: AppColors.secondaryPurple,
+      secondary: AppColors.secondaryOrange,
       onSecondary: AppColors.textWhite,
-      tertiary: AppColors.accentPurple,
+      tertiary: AppColors.accentBrown,
       surface: AppColors.surfaceLight,
       onSurface: AppColors.textPrimary,
       error: AppColors.mathRed,
       onError: AppColors.textWhite,
+      background: AppColors.backgroundLight, // Added background color
     ),
     
     // App Bar Theme
@@ -74,7 +75,7 @@ ThemeData buildAppTheme() {
       centerTitle: true,
       elevation: 0,
       scrolledUnderElevation: 2,
-      backgroundColor: AppColors.primaryBlue,
+      backgroundColor: AppColors.primaryGreen, // Changed
       foregroundColor: AppColors.textWhite,
       titleTextStyle: TextStyle(
         fontFamily: 'SF Pro Display',
@@ -90,7 +91,7 @@ ThemeData buildAppTheme() {
       systemOverlayStyle: SystemUiOverlayStyle.light,
     ),
     
-    // Typography - Mathematical and clean
+    // Typography (Using original SF Pro settings)
     textTheme: const TextTheme(
       // Display styles for headers
       displayLarge: TextStyle(
@@ -215,7 +216,7 @@ ThemeData buildAppTheme() {
     // Card Theme - Clean and modern
     cardTheme: CardThemeData(
       elevation: 2,
-      shadowColor: AppColors.primaryBlue.withValues(alpha: 0.1),
+      shadowColor: AppColors.primaryGreen.withValues(alpha: 0.1), // Changed
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
       ),
@@ -227,8 +228,8 @@ ThemeData buildAppTheme() {
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         elevation: 2,
-        shadowColor: AppColors.primaryBlue.withValues(alpha: 0.25),
-        backgroundColor: AppColors.primaryBlue,
+        shadowColor: AppColors.primaryGreen.withValues(alpha: 0.25), // Changed
+        backgroundColor: AppColors.primaryGreen, // Changed
         foregroundColor: AppColors.textWhite,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
@@ -246,7 +247,7 @@ ThemeData buildAppTheme() {
     // Text Button Theme
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
-        foregroundColor: AppColors.primaryBlue,
+        foregroundColor: AppColors.primaryGreen, // Changed
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
         ),
@@ -263,8 +264,8 @@ ThemeData buildAppTheme() {
     // Outlined Button Theme
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
-        foregroundColor: AppColors.primaryBlue,
-        side: const BorderSide(color: AppColors.primaryBlue, width: 1.5),
+        foregroundColor: AppColors.primaryGreen, // Changed
+        side: const BorderSide(color: AppColors.primaryGreen, width: 1.5), // Changed
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
         ),
@@ -292,7 +293,7 @@ ThemeData buildAppTheme() {
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
-        borderSide: const BorderSide(color: AppColors.primaryBlue, width: 2),
+        borderSide: const BorderSide(color: AppColors.primaryGreen, width: 2), // Changed
       ),
       errorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
@@ -315,7 +316,7 @@ ThemeData buildAppTheme() {
     // Bottom Navigation Bar Theme
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       backgroundColor: AppColors.surfaceLight,
-      selectedItemColor: AppColors.primaryBlue,
+      selectedItemColor: AppColors.primaryGreen, // Changed
       unselectedItemColor: AppColors.textLight,
       selectedLabelStyle: TextStyle(
         fontFamily: 'SF Pro Text',
@@ -333,7 +334,7 @@ ThemeData buildAppTheme() {
     
     // Floating Action Button Theme
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
-      backgroundColor: AppColors.secondaryPurple,
+      backgroundColor: AppColors.secondaryOrange, // Changed
       foregroundColor: AppColors.textWhite,
       elevation: 4,
       shape: CircleBorder(),
@@ -354,9 +355,9 @@ ThemeData buildAppTheme() {
     
     // Chip Theme
     chipTheme: ChipThemeData(
-      backgroundColor: AppColors.primaryLight.withValues(alpha: 0.1),
+      backgroundColor: AppColors.primaryLight.withValues(alpha: 0.1), // Changed
       labelStyle: const TextStyle(
-        color: AppColors.primaryBlue,
+        color: AppColors.primaryGreen, // Changed
         fontFamily: 'SF Pro Text',
         fontSize: 12,
         fontWeight: FontWeight.w500,
@@ -370,7 +371,7 @@ ThemeData buildAppTheme() {
     
     // Progress Indicator Theme
     progressIndicatorTheme: const ProgressIndicatorThemeData(
-      color: AppColors.primaryBlue,
+      color: AppColors.primaryGreen, // Changed
       linearTrackColor: AppColors.borderLight,
       circularTrackColor: AppColors.borderLight,
     ),
@@ -415,22 +416,23 @@ ThemeData buildAppTheme() {
   );
 }
 
-// Dark Theme for AI Math App
+// Dark Theme for AI Math App (Earthy Green & Sunset Orange)
 ThemeData buildDarkAppTheme() {
   return ThemeData(
     useMaterial3: true,
     brightness: Brightness.dark,
     
     colorScheme: const ColorScheme.dark(
-      primary: AppColors.primaryLight,
+      primary: AppColors.primaryLight, // Light green for dark mode primary
       onPrimary: AppColors.textPrimary,
-      secondary: AppColors.secondaryLight,
+      secondary: AppColors.secondaryLight, // Light orange for dark mode secondary
       onSecondary: AppColors.textPrimary,
-      tertiary: AppColors.accentPurple,
+      tertiary: AppColors.accentBrown,
       surface: AppColors.surfaceDark,
       onSurface: AppColors.textWhite,
       error: AppColors.mathRed,
       onError: AppColors.textWhite,
+      background: AppColors.backgroundDark,
     ),
     
     // Override specific themes for dark mode
@@ -444,7 +446,7 @@ ThemeData buildDarkAppTheme() {
     
     cardTheme: CardThemeData(
       elevation: 4,
-      shadowColor: AppColors.primaryLight.withValues(alpha: 0.2),
+      shadowColor: AppColors.primaryLight.withValues(alpha: 0.2), // Changed
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
       ),
@@ -453,9 +455,33 @@ ThemeData buildDarkAppTheme() {
     
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
       backgroundColor: AppColors.surfaceDark,
-      selectedItemColor: AppColors.primaryLight,
+      selectedItemColor: AppColors.primaryLight, // Changed
       unselectedItemColor: AppColors.textLight,
     ),
+    
+    // Apply TextTheme overrides for contrast (if necessary, default dark mode adjusts, but included for completeness)
+    textTheme: const TextTheme(
+      // Ensure display styles contrast well on dark background
+      displayLarge: TextStyle(
+        fontFamily: 'SF Pro Display',
+        fontSize: 32,
+        fontWeight: FontWeight.w700,
+        color: AppColors.textWhite, // Changed
+        letterSpacing: -0.5,
+        height: 1.2,
+      ),
+      bodyMedium: TextStyle(
+        fontFamily: 'SF Pro Text',
+        fontSize: 14,
+        fontWeight: FontWeight.w400,
+        color: AppColors.textWhite, // Changed
+        letterSpacing: 0.25,
+        height: 1.4,
+      ),
+      // Other text styles inherit from default dark theme but can be overridden here
+    ),
+    
+    // Keep other theme data like button themes, etc., consistent where the ColorScheme doesn't automatically handle it.
   );
 }
 

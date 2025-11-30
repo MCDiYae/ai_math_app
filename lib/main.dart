@@ -13,10 +13,10 @@ import 'screens/scan_screen.dart';
 import 'services/ad_services.dart';
 
 void main() async{
-   WidgetsFlutterBinding.ensureInitialized();
+  //  WidgetsFlutterBinding.ensureInitialized();
   
-  // Initialize AdMob
-  await AdService().initialize();
+  // // Initialize AdMob
+  // await AdService().initialize();
   runApp(const MyApp());
 }
 

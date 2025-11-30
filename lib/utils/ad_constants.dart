@@ -31,7 +31,7 @@ class AdConstants {
   // Ad Settings
   static  int interstitialFrequency = 4; // Show ad every 3 actions
   static  int bannerRefreshInterval = 60; // Refresh banner every 60 seconds
-  static  bool enableTestMode = true; // Set to false for production
+  static  bool enableTestMode = false; // Set to false for production
 
   // Production Ad IDs (Replace these with your actual AdMob Ad Unit IDs)
   static String prodAppId = Platform.isAndroid

@@ -4,19 +4,22 @@ import 'package:flutter/material.dart';
 
 import '../widgets/banner_ad_widget.dart';
 import '../widgets/interstitial_ad_widget.dart';
-
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    // Note: Wrapping in SafeArea and Scaffold is fine.
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(title: const Text("AI Math Solver"), centerTitle: true),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
+          // IMPORTANT CHANGE: Column to take up full available height
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            // Align the content to start, but use Expanded and Spacer to manage spacing
+            mainAxisAlignment: MainAxisAlignment.start, 
             children: [
               // Header
               Text(
@@ -25,67 +28,56 @@ class HomeScreen extends StatelessWidget {
                   context,
                 ).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
               ),
-              const SizedBox(height: 20),
-      
-              // Scan Card
-              FeatureCard(
-                icon: Icons.camera_alt,
-                title: "Scan Math Problem",
-                description:
-                    "Take a photo of any math problem to get instant solutions.",
-                color: Theme.of(context).colorScheme.primary,
-                onTap: () => InterstitialAdManager.showNavigationAd(
-                  context: context,
-                  onComplete: () => Navigator.pushNamed(context, '/scan'),
+              
+              // A little space after the greeting
+              const SizedBox(height: 30), 
+              
+              // 1. Scan Card (Wrapped in Expanded)
+              Expanded(
+                child: FeatureCard(
+                  icon: Icons.camera_alt,
+                  title: "Scan Math Problem",
+                  description: "Take a photo of any math problem to get instant solutions.",
+                  color: Theme.of(context).colorScheme.primary,
+                  onTap: () => Navigator.pushNamed(context, '/scan'),
                 ),
               ),
-              const SizedBox(height: 16),
-      
-              // Chat Card
-              FeatureCard(
-                icon: Icons.chat,
-                title: "Chat with AI",
-                description:
-                    "Ask any math question and get step-by-step answers.",
-                color: Theme.of(context).colorScheme.secondary,
-                onTap: () => InterstitialAdManager.showNavigationAd(
-                  context: context,
-                  onComplete: () => Navigator.pushNamed(context, '/chat'),
+              
+              // Space between cards
+              const SizedBox(height: 20), 
+              
+              // 2. Chat Card (Wrapped in Expanded)
+              Expanded(
+                child: FeatureCard(
+                  icon: Icons.chat,
+                  title: "Chat with AI",
+                  description: "Ask any math question and get step-by-step answers.",
+                  color: Theme.of(context).colorScheme.secondary,
+                  onTap: () => Navigator.pushNamed(context, '/chat'),
                 ),
               ),
+              
+              // Spacer to push everything else up slightly (Optional: Use instead of BannerAd)
+              // const Spacer(),
+              
               const SizedBox(height: 24),
-      
-              // Additional Info (Optional)
-              const Text(
-                "Features:",
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 8),
-              const FeatureItem(
-                icon: Icons.check,
-                text: "Algebra, Calculus, Geometry",
-              ),
-              const FeatureItem(
-                icon: Icons.check,
-                text: "Handwritten or printed problems",
-              ),
-              const FeatureItem(icon: Icons.check, text: "Detailed explanations"),
-              const HomeBannerAd(),
+              // const HomeBannerAd(), // Keep this if you want the ad at the bottom of the body
             ],
           ),
         ),
+        
+        // This part is fine as it's a fixed footer
         bottomNavigationBar: BottomAppBar(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
+              // ... Terms and Privacy buttons
               TextButton.icon(
                 onPressed: () => Navigator.pushNamed(context, '/terms'),
                 icon: const Icon(Icons.description_outlined, size: 24),
                 label: const Text('Terms'),
                 style: TextButton.styleFrom(
-                  textStyle: Theme.of(
-                    context,
-                  ).textTheme.labelSmall?.copyWith(fontSize: 12),
+                  textStyle: Theme.of(context).textTheme.labelSmall?.copyWith(fontSize: 12),
                 ),
               ),
               TextButton.icon(
@@ -93,9 +85,7 @@ class HomeScreen extends StatelessWidget {
                 icon: const Icon(Icons.privacy_tip_outlined, size: 24),
                 label: const Text('Privacy'),
                 style: TextButton.styleFrom(
-                  textStyle: Theme.of(
-                    context,
-                  ).textTheme.labelSmall?.copyWith(fontSize: 12),
+                  textStyle: Theme.of(context).textTheme.labelSmall?.copyWith(fontSize: 12),
                 ),
               ),
             ],
