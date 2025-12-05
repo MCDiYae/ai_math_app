@@ -15,6 +15,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // Main Title
             Text(
               'Privacy Policy',
               style: Theme.of(context).textTheme.headlineMedium?.copyWith(
@@ -23,78 +24,86 @@ class PrivacyPolicyScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 8),
+
+            // Last Updated Date
             Text(
-              'Last updated: December 2024',
+              'Last Updated: Nov 2025',
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
                 color: Colors.grey[600],
               ),
             ),
             const SizedBox(height: 24),
             
+            // Introductory Paragraph
+            Text(
+              'JUAN PALACIOS LLC ("we", "our", or "us") values your privacy. This Privacy Policy explains how we collect, use, and protect your information when you use our mobile application Ai Math Solver ("App"). By using the App, you agree to the practices described in this Privacy Policy.',
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                height: 1.5,
+              ),
+            ),
+            const SizedBox(height: 24),
+
+            // 1. Information We Collect
             _buildSection(
               context,
-              'Information We Collect',
-              'AI Math Solver is designed with privacy in mind. We collect minimal information necessary to provide our services:\n\n• Images: Photos you take or select for OCR processing (processed locally)\n• Text Messages: Chat conversations with our AI (not stored permanently)\n• Usage Data: Basic app usage statistics for improvement purposes\n• Device Information: Basic device info for compatibility and performance optimization',
+              '1. Information We Collect',
+              'AI Math Solver is designed with privacy in mind. We collect minimal information necessary to provide our services:\n\n1.1 Images (Photos)\nWhen you scan a math problem, the app may access your camera or photo library.\n• Images are used only for mathematical text recognition (OCR).\n• All image processing is done locally on your device using Google ML Kit.\n• We do not store, upload, or share your images.\n\n1.2 Text Messages\nWhen you chat with our AI, the messages you send are transmitted to our AI provider (DeepSeek AI) to generate responses.\n• Messages are not stored permanently by us.\n• No chat data is used for training or advertising purposes.\n\n1.3 Device Information\nWe may collect limited, non-personal information such as:\n• Device model\n• Operating system version\n• Performance and crash information\n• This helps improve app performance and compatibility.\n• We do not collect any information that can directly identify you.',
             ),
             
+            // 2. How We Use Your Information
             _buildSection(
               context,
-              'How We Use Your Information',
-              'Your information is used solely to:\n\n• Process mathematical problems through OCR\n• Provide AI-powered solutions and explanations\n• Improve app performance and user experience\n• Ensure app stability and security\n\nWe do not use your data for advertising or marketing purposes.',
+              '2. How We Use Your Information',
+              'Your data is used only to:\n\n• Solve math problems and generate responses.\n• Process images to extract text.\n• Improve app functionality, performance, and stability.\n• Provide customer support when needed.\n\nWe never sell your data or use it for advertising.',
             ),
             
+            // 3. Third-Party Services
             _buildSection(
               context,
-              'Data Storage and Security',
-              'Your privacy is our priority:\n\n• Images are processed locally on your device using Google ML Kit\n• Chat conversations are not stored permanently on our servers\n• All communications with our AI service are encrypted\n• We do not create permanent user profiles or accounts\n• No personal identification information is required or collected',
+              '3. Third-Party Services',
+              'The app uses the following trusted services:\n\n3.1 Google ML Kit\n• Used for on-device text recognition (OCR).\n• Images are processed directly on your device.\n• No image data is sent to Google servers.\n\n3.2 DeepSeek AI\n• Used to analyze and solve mathematical problems.\n• Messages are processed to generate solutions.\n• Data is not stored after processing.\n\n3.3 Device Camera and Gallery\n• Used only when you choose to take or select a photo.\n• Requires your permission.',
             ),
             
+            // 4. Permissions We Use
             _buildSection(
               context,
-              'Third-Party Services',
-              'AI Math Solver uses the following third-party services:\n\n• Google ML Kit: For on-device text recognition (no data sent to Google)\n• DeepSeek AI: For mathematical problem solving (messages are processed but not stored)\n• Device Camera and Gallery: For image capture and selection (permissions required)',
+              '4. Permissions We Use',
+              'The app requests the following permissions:\n\n• Camera: To take photos of math problems.\n• Photo Library / Storage: To select existing images for text extraction.\n• Internet: Required to communicate with the AI model and generate solutions.\n\nWe request only the permissions necessary for the app to function.',
             ),
             
+            // 5. Data Security
             _buildSection(
               context,
-              'Data Sharing',
-              'We do not sell, trade, or otherwise transfer your personal information to third parties. This does not include trusted third parties who assist us in operating our app, conducting our business, or servicing you, as long as those parties agree to keep this information confidential.',
+              '5. Data Security',
+              'We take data protection seriously:\n\n• Images are processed locally and never uploaded.\n• All network communication is encrypted (HTTPS).\n• We do not store personal information on our servers.',
             ),
             
+            // 6. Children’s Privacy
             _buildSection(
               context,
-              'Children\'s Privacy',
-              'Our app is suitable for users of all ages, including children. We do not knowingly collect personal information from children under 13. If you are a parent or guardian and believe your child has provided us with personal information, please contact us.',
+              '6. Children’s Privacy',
+              'AI Math Solver is suitable for students, but we do not knowingly collect personal data from children.\nIf you believe a child has provided personal data, please contact us and we will delete it.',
             ),
             
+            // 7. Your Rights
             _buildSection(
               context,
-              'Permissions Explanation',
-              'AI Math Solver requests the following permissions:\n\n• Camera: To capture photos of mathematical problems\n• Photo Library: To select existing images for processing\n• Internet: To communicate with AI services for problem solving\n\nThese permissions are used only for their stated purposes.',
+              '7. Your Rights',
+              'You may:\n\n• Request deletion of any temporary data associated with your use.\n• Disable camera or photo access at any time through your device settings.',
             ),
             
+            // 8. Changes to This Policy
             _buildSection(
               context,
-              'Data Retention',
-              'We retain your data for the shortest time necessary:\n\n• Images: Processed locally and not stored permanently\n• Chat messages: Cleared when you close the app or clear chat\n• Usage analytics: Anonymized and retained for app improvement only',
+              '8. Changes to This Policy',
+              'We may update this Privacy Policy. When we do, we will update the "Last Updated" date at the top.',
             ),
             
+            // 9. Contact Us (Updated with email)
             _buildSection(
               context,
-              'Your Rights',
-              'You have the right to:\n\n• Clear your chat history at any time\n• Deny or revoke app permissions\n• Request information about data processing\n• Contact us with privacy concerns\n• Uninstall the app to remove all local data',
-            ),
-            
-            _buildSection(
-              context,
-              'Changes to Privacy Policy',
-              'We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the "Last updated" date.',
-            ),
-            
-            _buildSection(
-              context,
-              'Contact Us',
-              'If you have any questions about this Privacy Policy or our data practices, please contact us through the app support section or our official channels.',
+              '9. Contact Us',
+              'If you have any questions about this Privacy Policy or your data, please contact us:\njuancpalacios878@gmail.com\nThank you for using AI Math Solver.',
             ),
             
             const SizedBox(height: 32),

@@ -24,7 +24,7 @@ class TermsConditionsScreen extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text(
-              'Last updated: Jul 2025',
+              'Last updated: Nov 2025',
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
                 color: Colors.grey[600],
               ),
